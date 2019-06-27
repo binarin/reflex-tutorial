@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE OverloadedStrings #-}
 module Ex01.Exercise where
 
 import Reflex
@@ -17,14 +18,15 @@ ex01 ::
   Outputs t
 ex01 money (Inputs eCarrot eCelery eCucumber eRefund) =
   let
+    eProduct = leftmost [carrot <$ eCarrot, celery <$ eCelery, cucumber <$ eCucumber]
+    eProdWithEnoughMoney = ffilter (\(Product _ cost) -> cost <= money) eProduct
+    eNotEnoughMoney = () <$ ffilter (> money) (pCost <$> eProduct)
     eVend =
-      never
+      leftmost ["Insufficient funds" <$ eNotEnoughMoney, pName <$> eProdWithEnoughMoney]
     eSpend =
-      never
+      pCost <$> eProdWithEnoughMoney
     eChange =
-      never
-    eNotEnoughMoney =
-      never
+      money <$ eRefund
   in
     Outputs eVend eSpend eChange eNotEnoughMoney
 

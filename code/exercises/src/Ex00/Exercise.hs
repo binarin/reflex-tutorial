@@ -19,14 +19,15 @@ ex00 ::
   Event t () ->
   (Event t Text, Event t Text)
 ex00 eFirst eSecond =
- ( "Boring"        <$ eFirst
- , "Really boring" <$ eSecond
+ ( "Better"        <$ eFirst
+ , "Much better"   <$ eSecond
  )
 
 #ifndef ghcjs_HOST_OS
 go ::
   IO ()
-go =
+go = do
+  putStrLn "here"
   run $ 
     host ex00
 #endif
