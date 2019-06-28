@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecursiveDo #-}
 {-# LANGUAGE GADTs #-}
+{-# OPTIONS_GHC -Wno-simplifiable-class-constraints #-}
 module Ex09.Run (
     host
   ) where
